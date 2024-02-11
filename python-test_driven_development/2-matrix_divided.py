@@ -49,4 +49,4 @@ def matrix_divided(matrix, div):
         new_row = [round(num / div, 2) for num in row]
         new_matrix.append(new_row)
 
-    return new_matrix*
+    return new_matrix
