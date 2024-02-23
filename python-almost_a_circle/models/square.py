@@ -1,77 +1,58 @@
 #!/usr/bin/python3
+""" class that named Square """
 
-"""Square class module"""
 
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """
-    Square class
-    __size: size of the square
-    __x: x coordinate of the square
-    __y: y coordinate of the square
-    """
-
+    """ Define a square"""
     def __init__(self, size, x=0, y=0, id=None):
-        """
-        Initialize the square class
-        """
-
         super().__init__(size, size, x, y, id)
-
-    def __str__(self):
-        """
-        String representation of the square
-        """
-
-        return "[Square] ({}) {}/{} - {}".format(self.id,
-                                                 self.x, self.y, self.width)
+        self.size = size
 
     @property
     def size(self):
-        """
-        Getter for size
-        """
+        """Set/get the y coordinate of the Square."""
         return self.width
 
     @size.setter
     def size(self, value):
-        """
-        Setter for size
-        """
+        """Set/get the y coordinate of the Square."""
         self.width = value
         self.height = value
 
-    def update(self, *args, **kwargs):
-        """
-        Update the square
-        """
+    def __str__(self):
+        """ return [Square] (<id>) <x>/<y> - <size>"""
+        return "[Square] ({}) {}/{} - {}".format(
+            self.id, self.x, self.y, self.size)
 
-        if args:
-            for i, arg in enumerate(args):
-                if i == 0:
-                    self.id = arg
-                elif i == 1:
-                    self.size = arg
-                elif i == 2:
-                    self.x = arg
-                elif i == 3:
-                    self.y = arg
+    def update(self, *args, **kwargs):
+        """change rectangle with variadic arguments"""
+        argc = len(args)
+        if argc > 0:
+            try:
+                self.id = args[0]
+                self.size = args[1]
+                self.x = args[2]
+                self.y = args[3]
+            except():
+                pass
         else:
-            for key, value in kwargs.items():
-                if key == "id":
-                    self.id = value
-                elif key == "size":
-                    self.size = value
-                elif key == "x":
-                    self.x = value
-                elif key == "y":
-                    self.y = value
+            if 'id' in kwargs:
+                self.id = kwargs['id']
+            if 'size' in kwargs:
+                self.size = kwargs['size']
+            if 'x' in kwargs:
+                self.x = kwargs['x']
+            if 'y' in kwargs:
+                self.y = kwargs['y']
 
     def to_dictionary(self):
-        """
-        Dictionary representation of the square
-        """
-
-        return {"id": self.id, "size": self.size, "x": self.x, "y": self.y}
+        """make a square dictionnary"""
+        square_dict = {}
+        square_dict["id"] = self.id
+        square_dict["size"] = self.size
+        square_dict["x"] = self.x
+        square_dict["y"] = self.y
+        return square_dict
