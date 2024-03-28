@@ -1,58 +1,55 @@
 #!/usr/bin/python3
-""" class that named Square """
-
+""" Defines a square class """
 
 from models.rectangle import Rectangle
 
 
-class Square(Rectangle):
-    """ Define a square"""
+class Square (Rectangle):
+    """ Represent a square """
     def __init__(self, size, x=0, y=0, id=None):
+        """ Initialize a square
+        Args:
+            size (int): size of new square
+            x (int): x-coordinate of new square
+            y (int): y-coordinate of new square
+            id (int): id of new square
+        """
         super().__init__(size, size, x, y, id)
-        self.size = size
 
     @property
     def size(self):
-        """Set/get the y coordinate of the Square."""
+        """ Get size of square """
         return self.width
 
     @size.setter
     def size(self, value):
-        """Set/get the y coordinate of the Square."""
+        """ Set size of square """
         self.width = value
         self.height = value
 
     def __str__(self):
-        """ return [Square] (<id>) <x>/<y> - <size>"""
+        """ Return string representation of a square """
         return "[Square] ({}) {}/{} - {}".format(
-            self.id, self.x, self.y, self.size)
+            self.id, self.x, self.y, self.width
+        )
 
     def update(self, *args, **kwargs):
-        """change rectangle with variadic arguments"""
-        argc = len(args)
-        if argc > 0:
-            try:
-                self.id = args[0]
-                self.size = args[1]
-                self.x = args[2]
-                self.y = args[3]
-            except():
-                pass
+        """ Assigns an argument to each attribute """
+        attributes = ["id", "size", "x", "y"]
+
+        if args:
+            for i, arg in enumerate(args):
+                if i < len(attributes):
+                    setattr(self, attributes[i], arg)
         else:
-            if 'id' in kwargs:
-                self.id = kwargs['id']
-            if 'size' in kwargs:
-                self.size = kwargs['size']
-            if 'x' in kwargs:
-                self.x = kwargs['x']
-            if 'y' in kwargs:
-                self.y = kwargs['y']
+            for key, value in kwargs.items():
+                setattr(self, key, value)
 
     def to_dictionary(self):
-        """make a square dictionnary"""
-        square_dict = {}
-        square_dict["id"] = self.id
-        square_dict["size"] = self.size
-        square_dict["x"] = self.x
-        square_dict["y"] = self.y
-        return square_dict
+        """ Returns the dictionnary rep of a square """
+        return {
+            "id": self.id,
+            "size": self.width,
+            "x": self.x,
+            "y": self.y
+        }
